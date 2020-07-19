@@ -1,0 +1,513 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Magic Fighting</title>
+<style>
+	body{
+		font-family: "微软雅黑";
+	}
+	#world{
+		margin: auto;
+		background-color: black;
+		background-image: url(方格纸底图.jpg);
+		background-size: cover;
+		width: 800px;
+		height: 600px;
+		padding: 10px;
+		border: 8px solid #9A9A9A;
+		border-radius: 30px;
+	}/*游戏外框*/
+	#top{
+		height:80px;padd
+	}
+	#reTop{
+		height: 30px;
+	}
+	#middle{
+		height: 320px;
+		margin-top: 5px;
+		padding-bottom: 50px;
+		box-sizing: border-box;
+	}
+	#bottom{
+		height: 150px;
+	}
+	#time{
+		width: 100px;
+		height: 40px;
+		margin: -20px 350px;
+		background-color:rgba(85,101,121,1.00);
+		color:white;
+		font-size: 1.35em;
+		border-radius: 20px;
+		border: none;
+		cursor: pointer;
+	}
+	#time:hover{
+		background-color:rgba(142,152,166,1.00);
+	}
+	#block1{
+		background-image: url(吊眼骷髅.png);
+		background-size: contain;
+		width: 180px;
+		height:180px;
+		margin-left: 30px;
+		padding: 45px 35px;
+		display: inline-block;
+		border-radius: 6px;
+		box-sizing: border-box;
+	}
+	#block2{
+		background-image: url(平眼骷髅.png);
+		background-size: contain;
+		width: 180px;
+		height: 180px;
+		margin-left: 5px;
+		padding: 45px 35px;
+		display: inline-block;
+		border-radius: 6px;
+		box-sizing: border-box;
+	}
+	#block3{
+		background-image: url(圆眼骷髅.png);
+		background-size: contain;
+		width: 180px;
+		height: 180px;
+		margin-left: 5px;
+		padding: 45px 35px;
+		display: inline-block;
+		border-radius: 6px;
+		box-sizing: border-box;
+	}
+	#block4{
+		background-image: url(闭眼骷髅.png);
+		background-size: contain;
+		width: 180px;
+		height: 180px;
+		margin-left: 5px;
+		padding: 45px 35px;
+		display: inline-block;
+		border-radius: 6px;
+		box-sizing: border-box;
+	}
+	.whiteBld{/*血条下面的白底*/
+		display: inline-block;
+		width: 200px;
+		height: 22px;
+		background-color: white;
+		margin:0px 93px;
+		border: 4px solid rgba(85,101,121,1.00);
+		border-radius: 15px;
+	}
+	#playerBld,#monsterBld{/*血条*/
+		background-color:rgba(130,141,155,1.00);
+		width: 200;
+		height: 22px;
+		border-radius: 15px;
+	}
+	#chara{
+		height: 230px;
+		width: 230px;
+		margin-left: 40px;
+		margin-top: 50px;
+		display: inline-block;
+		background-image:url(角色图常规.png);
+		background-size: contain;
+	}
+	#choices{/*选项框*/
+		width: 200px;
+		height: 290px;
+		background-color:rgba(211,211,222,1.00);
+		margin-left: 30px;
+		margin-top: 10px;
+		padding: 10px;
+		color: black;
+		display: inline-block;
+		box-sizing: border-box;
+		border: 4px solid rgba(85,101,121,1.00);
+		visibility: hidden;
+		position:  relative;
+		top: 5px;
+		left: -10px;
+		border-radius: 10px; 
+	}
+	#monster{
+		height: 230px;
+		width: 230px;
+		background-image: url(暗夜魔女无骷髅.png);
+		background-size: contain;
+		display: inline-block;
+		margin-left:0px;	
+	}
+	#demo{/*倒计时*/
+		background-color: white;
+		width: 100px;
+		color: black;
+		font-size:25px;
+		text-align: center;
+		display: inline-block;
+		margin-left: 350px;
+		margin-top: 20px;
+		display: block;
+		border-radius: 7px;
+	}
+	.oneZhou{/*单条咒语*/
+		background-color:rgba(231,232,243,1.00);
+		margin: 6px 18px;
+		padding: 3px;
+		border-radius: 5px;
+		border: 2px solid rgba(85,101,121,1.00);
+		width: 130px;
+	}
+	.oneZhou:hover{
+		background-color:rgba(193,195,213,1.00);
+	}
+	.littleCheck{/*自己做的虚假的多选框的外框*/
+		display: inline-block;
+		width: 13px;
+		height: 13px;
+		border: 2px solid;
+		background-color: white;
+		border-radius: 4px;
+		position: relative;
+		left: 2px;
+		top: 2px;
+	}
+	.littleCheck input{/*把真正的多选框隐藏*/
+		opacity: 0;
+		cursor: pointer;
+		position: absolute;
+		left: -3px;
+		top: -3px;
+		z-index: 5; 
+	}
+	.littleCheck span{/*自己写的勾*/
+	    position: absolute;
+		top: -6px; 
+		right: -1px;
+		font-size: 20px;
+		font-weight: bold; 
+	}
+	input[type="checkbox"]+span{/*组合选择器，紧邻的同级元素，未选中时自己写的勾不会出现*/
+			opacity: 0;
+		}
+    input[type="checkbox"]:checked+span{/*选中时自己写的勾出现*/
+			opacity: 1;
+		}
+	lable{
+	font-size: 0.9em;
+	}
+	#imSure{/*确认按钮*/
+		width: 70px;
+		height: 30px;
+		margin-left: 50px;
+		background-color:rgba(85,101,121,1.00);
+		color: white;
+		border-radius: 20px;
+		font-size: 1.05em;
+		font-family: "微软雅黑";
+		border: none;
+		cursor: pointer;
+	}
+	#imSure:hover{
+		background-color: rgba(126,140,158,1.00);
+	}
+	#limit{/*选项框内的倒计时*/
+		font-family: "微软雅黑";
+		border-radius: 10px;
+		margin: 5px 8px 8px;
+		font-weight: 600;
+		font-size: 1.1em;
+		box-sizing: border-box;
+	}
+	.aA,.bB,.cC,.dD,.eE{
+		visibility: hidden;/*开始时咒语不显示*/
+	}
+</style>
+</head>
+
+<body>
+	<div id="world">
+		<!--顶部的计时器-->
+		<div id="top">
+			<b id="gmTitle" style="font-size: 2em;float: left;color: rgba(85,101,121,1.00)">✦Magic Fighting✦</b>
+			<button onClick="countDown()" id="time">Start</button>
+			<div id="demo">01:00</div>
+		</div>
+		<!--中间的玩家角色，选项框，敌方角色-->
+		<div id="reTop">
+			<div class="whiteBld">
+				<div id="playerBld"></div>
+			</div>
+			<div class="whiteBld">
+				<div id="monsterBld"></div>
+			</div>
+		</div>
+		<div id="middle">
+			<div id="chara">
+			</div>
+			<div id="choices">
+				选择你的魔法构成：<br>
+				<div class="oneZhou">
+					<div class="littleCheck">
+						<input type="checkbox" class="Ee" name="zY"/><span>✓</span>
+					</div>
+				    <lable for="zhouYu">银纹龙蛋</lable>
+				</div>
+				<div class="oneZhou">
+					<div class="littleCheck">
+						<input type="checkbox" class="Aa" name="zY"><span>✓</span>
+					</div>
+				    <lable for="zhouYu">金色玻璃眼球</lable>
+				</div>
+				<div class="oneZhou">
+					<div class="littleCheck">
+						<input type="checkbox" class="Cc" name="zY"><span>✓</span>
+					</div>
+				    <lable for="zhouYu">春日的铃兰</lable>
+				</div>
+				<div class="oneZhou">
+				<div class="littleCheck">
+					<input type="checkbox" class="Dd" name="zY"><span>✓</span>
+					</div>
+				<lable for="zhouYu">烈焰珍珠</lable>
+				</div>
+				<div class="oneZhou">
+				<div class="littleCheck">
+					<input type="checkbox" class="Bb" name="zY"><span>✓</span>
+					</div>
+				<lable for="zhouYu">纯白色鸢尾花</lable>
+				</div>
+				<button id="imSure" onClick="checkWord(),clickTm()">确定</button>
+				<div id="limit">小心！</div>
+			</div>
+			<div id="monster">
+			</div>
+		</div>
+		
+		<div id="bottom">
+		<div id="block1">
+			<p class="aA">金色玻璃眼球</p>
+			<p class="bB">纯白色鸢尾花</p>
+		</div>
+		<div id="block2">
+			<p class="eE">银纹龙蛋</p>
+			<p class="cC">春日的铃兰</p>
+		</div>
+		<div id="block3">
+			<p class="bB">纯白色鸢尾花</p>
+			<p class="dD">烈焰珍珠</p>
+		</div>
+		<div id="block4">
+			<p class="dD">烈焰珍珠</p>
+			<p class="eE">银纹龙蛋</p>
+		</div>
+		</div>
+		
+	</div>
+	
+<script>
+	var seconds = 59;//记录游戏时间
+    var speed = 1000;//记录一秒钟时长
+	var oChoices = document.getElementById("choices");
+	var oMonster = document.getElementById("monster");
+	var monColor = oMonster.style.backgroundColor;//这好像不起作用
+	var t = 0;//点击确定的总次数
+	var m = 0;//单局是否点击
+	var z = 0;//确认游戏是否终止
+	var plylen = 200;//记录玩家血条长度
+	var monlen = 200;//记录怪物血条长度
+	var zhouYuA = document.getElementsByClassName("aA");
+	var zhouYuB = document.getElementsByClassName("bB");
+	var zhouYuC = document.getElementsByClassName("cC");
+	var zhouYuD = document.getElementsByClassName("dD");
+	var zhouYuE = document.getElementsByClassName("eE");
+	var picNum = 0;//确认黑魔女是哪张图片
+	/*计时器*/
+	function appearZhouYu(){
+		zhouYuA[0].style.visibility = "visible";
+	    zhouYuB[0].style.visibility = "visible";
+		zhouYuB[1].style.visibility = "visible";
+		zhouYuC[0].style.visibility = "visible";
+		zhouYuD[0].style.visibility = "visible";
+		zhouYuD[1].style.visibility = "visible";
+		zhouYuE[0].style.visibility = "visible";
+		zhouYuE[1].style.visibility = "visible";
+	}
+	function hiddenZhouYu(){
+		zhouYuA[0].style.visibility = "hidden";
+	    zhouYuB[0].style.visibility = "hidden";
+		zhouYuB[1].style.visibility = "hidden";
+		zhouYuC[0].style.visibility = "hidden";
+		zhouYuD[0].style.visibility = "hidden";
+		zhouYuD[1].style.visibility = "hidden";
+		zhouYuE[0].style.visibility = "hidden";
+		zhouYuE[1].style.visibility = "hidden";
+		//色块上的文字全部隐藏
+	}
+	function changeColor(){
+		var colnum=Math.floor(Math.random()*4+1);//随机生成一个1-4的整数
+		switch(colnum){
+			case 1:
+			document.getElementById("monster").style.backgroundImage = "url('暗夜魔女吊眼骷髅.png')";
+			picNum = 1;
+			break;
+			case 2:
+			document.getElementById("monster").style.backgroundImage = "url('暗夜魔女平眼骷髅.png')";
+			picNum = 2;
+			break;
+			case 3:
+			document.getElementById("monster").style.backgroundImage = "url('暗夜魔女圆眼骷髅.png')";
+			picNum = 3;
+			break;
+			case 4:
+			document.getElementById("monster").style.backgroundImage = "url('暗夜魔女闭眼骷髅.png')";
+			picNum = 4;
+			break;
+			}
+		
+		    function optionNoAll(){//取消所有已选中的多选框，用来做每一回合后的清空
+		    var zY = document.getElementsByName("zY");
+		    for(var i = 0;i < zY.length;i++){
+			var zYY = zY[i];
+			zYY.checked = false;
+	 	    }	
+	        }
+		    optionNoAll();
+		    oChoices.style.visibility = "visible";//出现选项框
+		    timing();
+		    
+	}
+	
+	function reStart(){//开始新的回合
+		var ii=0;
+		var limiTime0 = setInterval(updateNum, 1000);
+		updateNum();
+		function updateNum(){
+			ii++;
+		if(ii == 2){
+			document.getElementById("monster").style.backgroundImage = "url('暗夜魔女无骷髅.png')";
+			picNum = 0;
+			appearZhouYu();
+		}//一回合结束后再过2秒图片刷新，进入新的回合
+		if(ii == 7){
+			hiddenZhouYu();
+		    changeColor();
+			clearInterval(limiTime0);//停止倒计时
+		}
+	}
+	}
+	
+	function compare(){//比较双方血量，决定游戏是否结束
+		if(plylen == 0){
+			window.location.href="you lose.html";
+		}
+		if(monlen == 0){
+			window.location.href="you win.html";
+		}
+	}
+	
+    function countDown(seconds,speed){//总的游戏计时器
+	compare();//只要游戏一开始，就一直比较双方血量
+	if(seconds == 59){
+	   appearZhouYu();
+	}
+    var txt = "00:" + ((seconds < 10) ? "0" + seconds:seconds);//三目运算符，秒数小于10则在前面加个0
+    demo.innerHTML = txt;
+    var timeId = setTimeout("countDown(seconds--,speed)",speed);
+    if(seconds == 0){
+       window.location.href="timeOver.html";
+       }//跳转到超时页面
+	document.getElementById("time").disabled=true;//按钮只能点击一次
+    document.getElementById("time").style.backgroundColor = "rgba(211,211,222,1.00)";
+	if(seconds == 55){
+		hiddenZhouYu();
+		changeColor();
+	}
+	}
+    	/*以下：选项框的限时，超过时间不点击确定则自动扣血*/	
+	    function timing(){
+		m = 0;//该局点击次数预设为0
+		var i=8;
+		var oLimit = document.getElementById("limit");
+		var limiTime = setInterval(updateNum, 1000);
+		updateNum();
+		function updateNum(){
+			var j=i--;
+			oLimit.innerHTML = j + "秒后受到攻击" ;
+		if(m == 0 && j == 0){//逻辑与，当不点击确定且倒计时到0时
+			clearInterval(limiTime);//停止倒计时
+			oChoices.style.visibility = "hidden";
+			plylen = plylen - 50;
+			document.getElementById("playerBld").style.width = plylen.toString() + "px";
+			reStart();
+	    }
+		if(m != 0){
+			clearInterval(limiTime);//如果玩家点击确定，则停止倒计时
+		}
+		}
+		}
+	
+	function checkWord(){//在选项框内点击确定后执行
+		t++;//总点击次数+1
+		m = 1;//该局点击次数为1
+		reStart();
+	var oA = document.getElementsByClassName("Aa")[0];
+	var oB = document.getElementsByClassName("Bb")[0];
+	var oC = document.getElementsByClassName("Cc")[0];
+	var oD = document.getElementsByClassName("Dd")[0];
+	var oE = document.getElementsByClassName("Ee")[0];
+	
+      if(picNum == 1){
+			
+		if(oA.checked == true && oB.checked == true && oC.checked == false && oD.checked == false
+	  && oE.checked == false){
+		//逻辑与，仅当答案正确时执行下面代码 
+		monlen = monlen - 50;
+		document.getElementById("monsterBld").style.width = monlen.toString() + "px";
+      }else{
+		plylen = plylen - 50;
+	  	document.getElementById("playerBld").style.width = plylen.toString() + "px";
+	  }	
+	
+	}else if(picNum == 2){
+		
+		if(oA.checked == false && oB.checked == false && oC.checked == true && oD.checked == false
+	  && oE.checked == true){
+		monlen = monlen - 50;
+		document.getElementById("monsterBld").style.width = monlen.toString() + "px";
+	  }else{
+		plylen = plylen - 50;
+		document.getElementById("playerBld").style.width = plylen.toString() + "px";
+	  }	
+		
+	}else if(picNum == 3){
+		
+		if(oA.checked == false && oB.checked == true && oC.checked == false && oD.checked == true
+	  && oE.checked == false){
+		monlen = monlen - 50;
+		document.getElementById("monsterBld").style.width = monlen.toString() + "px";
+	  }else{
+		plylen = plylen - 50;
+		document.getElementById("playerBld").style.width = plylen.toString() + "px";
+	  }	
+		
+	}else if(picNum == 4){
+		
+		if(oA.checked == false && oB.checked == false && oC.checked == false && oD.checked == true
+	  && oE.checked == true){
+		monlen = monlen - 50;
+		document.getElementById("monsterBld").style.width = monlen.toString() + "px";
+	  }else{
+		plylen = plylen - 50;
+		document.getElementById("playerBld").style.width = plylen.toString() + "px";
+	  }	
+		
+	}		
+		oChoices.style.visibility = "hidden";
+	}
+	
+</script>
+</body>
+</html>

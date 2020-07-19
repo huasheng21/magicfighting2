@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>beforeGame</title>
+<style>	
+	body{
+		font-size: 20px;
+		font-family: "微软雅黑";
+	}
+	#world{
+		margin: auto;
+		background-color: black;
+		background-image: url(方格纸底图.jpg);
+		background-size: cover;
+		width: 800px;
+		height: 600px;
+		padding: 10px;
+		border: 8px solid #9A9A9A;
+		border-radius: 30px;
+	}/*游戏外框*/
+	#middle1{
+		height: 200px;
+		margin: 0px 50px;
+		padding: 30px 40px;
+		box-sizing: border-box;
+		background-color: white;
+		border: 5px solid rgba(133,133,133,1.00);
+		border-radius: 20px;
+	}
+	#print{
+    width:600px;
+    white-space:nowrap;
+    overflow:hidden;
+    animation: dy 4s linear 1;
+    }/*打字机动画*/
+
+    @keyframes dy{
+    from { width: 0;}
+    }
+	#back{
+		width: 150px;
+		height: 40px;
+		margin-left: 400px;
+		background-color:rgba(155,163,180,1.00);
+		border-radius: 12px;
+		border: none;
+		color: white;
+		font-family: "微软雅黑";
+		font-size: 1em;
+	}
+	#rules{
+		height: 400px;
+		margin: 100px 50px;
+		padding: 30px 40px;
+		box-sizing: border-box;
+		background-color: white;
+		border: 5px solid rgba(133,133,133,1.00);
+		border-radius: 20px;
+		display: none;
+	}
+	#read{
+		width: 150px;
+		height: 40px;
+		margin-left: 400px;
+		background-color:rgba(155,163,180,1.00);
+		border-radius: 12px;
+		border: none;
+		color: white;
+		font-family: "微软雅黑";
+		font-size: 1em;
+	}
+	#read:hover,#back:hover{
+		background-color: rgba(121,132,153,1.00);
+	}
+</style>
+</head>
+
+<body>
+	<div id="world">
+		<div id="pic1">
+		<img src="开始前.png" alt="主角CG">
+		</div>
+		<div id="middle1">
+		    <p id="print">你已经掌握了很多魔法，是时候让你面对暗夜魔女的试炼了。</p>
+			<button id="read" onClick="readRule()">查看对战规则</button>
+		</div>
+		<div id="rules">
+			<p>暗夜魔女用<b style="color: rgba(194,55,55,1.00)">四种骷髅</b>来进行攻击。</p>
+			<p>每一种骷髅都有对应的<b style="color: rgba(194,55,55,1.00)">两个魔法构成</b>，只要选择所有正确的魔法构成，
+				就可以对暗夜魔女造成伤害。</p>
+			<p>如果 <b style="color: rgba(194,55,55,1.00)">选择错误</b> 或
+				<b style="color: rgba(194,55,55,1.00)">超时不攻击</b>，你会受到暗夜魔女的魔法伤害。</p>
+			<p>每回合开始前你有一定的时间记忆骷髅与对应的魔法构成。</p>
+			<p>祝你好运！</p>
+			<button id="back" onClick="backToGame()">我准备好了</button>
+		</div>
+		
+	</div>
+	<script>
+		function backToGame(){
+			window.location.href="game.html";
+		}
+		function readRule(){
+			document.getElementById("middle1").style.display = "none";
+			document.getElementById("pic1").style.display = "none";
+			document.getElementById("rules").style.display = "block";
+			
+		}
+	</script>
+
+
+</body>
+</html>

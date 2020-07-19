@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>youlose</title>
+<style>	
+	body{
+		font-size: 20px;
+		font-family: "微软雅黑";
+	}
+	#world{
+		margin: auto;
+		background-color: black;
+		background-image: url(方格纸底图.jpg);
+		background-size: cover;
+		width: 800px;
+		height: 600px;
+		padding: 10px;
+		border: 8px solid #9A9A9A;
+		border-radius: 30px;
+	}/*游戏外框*/
+	#middle{
+		height: 200px;
+		margin: 0px 50px;
+		padding: 30px 40px;
+		box-sizing: border-box;
+		background-color: white;
+		border: 5px solid rgba(133,133,133,1.00);
+		border-radius: 20px;
+	}
+	#print{
+    width:600px;
+    white-space:nowrap;
+    overflow:hidden;
+    animation: dy 4s linear 1;
+    }/*打字机动画*/
+
+    @keyframes dy{
+    from { width: 0;}
+    }
+	.back{
+		width: 120px;
+		height: 40px;
+		margin-right: 100px;
+		background-color:rgba(155,163,180,1.00);
+		border-radius: 12px;
+		border: none;
+		color: white;
+		font-family: "微软雅黑";
+		font-size: 1em;
+	}
+	.back:hover{
+		background-color: rgba(121,132,153,1.00);
+	}
+</style>
+</head>
+
+<body>
+	<div id="world">
+		<div id="pic2">
+		<img src="失败CG.png" alt="失败主角CG">
+		</div>
+		<div id="middle">
+		    <p id="print">战斗失败了...你或许会成为下一个暗夜魔女。</p>
+			<button class="back" onClick="backToGame()">重新挑战</button>
+			<button class="back" onClick="backToBefore()">回到最初</button>
+		</div>
+		
+	</div>
+	<script>
+		function backToGame(){
+			window.location.href="game.html";
+		}
+		function backToBefore(){
+			window.location.href="index.html";
+		}
+		
+	</script>
+</body>
+</html>
